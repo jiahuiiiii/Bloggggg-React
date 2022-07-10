@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
@@ -54,15 +57,13 @@ function Create({ notifyFinish }) {
       },
 
       body: JSON.stringify(data),
-    }).then((res) => res.json()).then((data) => {
-      if (data.success) {
+    }).then((res) => res.json()).then((d) => {
+      if (d.success) {
         localStorage.clear();
         notifyFinish();
         navigate('/');
       }
     });
-
-    console.log(data);
   }
   useEffect(() => {
     if (quill) {

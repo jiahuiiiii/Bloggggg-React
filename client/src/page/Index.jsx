@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -11,9 +12,9 @@ function Index() {
   useEffect(() => {
     fetch('http://localhost:8787/list')
       .then((res) => res.json())
-      .then((d) => setData(d))
+      .then((d) => setData(d));
   }, []);
-  console.log(data)
+  console.log(data);
   return (
     <div className="flex-col w-full text-neutral min-h-screen bg-amber-300 flex items-center p-32 tracking-wider">
       <div className="flex flex-row w-full justify-between items-center">
