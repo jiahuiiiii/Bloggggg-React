@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Manrope', sans-serif;
+}
+
+.ql-snow.ql-container {
+  @apply bg-amber-100 border border-neutral
+}
+
+.ql-snow.ql-toolbar {
+  @apply border border-neutral
+}
