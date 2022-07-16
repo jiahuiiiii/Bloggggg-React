@@ -10,8 +10,15 @@
 
 .ql-snow.ql-container {
   @apply bg-amber-100 border border-neutral
+  text-xl
+  tracking-wide
 }
 
 .ql-snow.ql-toolbar {
   @apply border border-neutral
 }
+
+:root {
+  --toastify-color-success: rgb(251 191 36);
+}
+

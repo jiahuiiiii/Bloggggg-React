@@ -8,15 +8,15 @@ import Article from './page/Article';
 
 function App() {
   const notifyFinish = () => {
-    toast.suceess('Article created!', {
+    toast.success('Article created!', {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2000,
-      hideProgressBar: true,
+      hideProgressBar: false,
       closeButton: false,
     });
   };
   return (
-    <div className="App">
+    <div className="App w-full overflow-x-hidden">
       <Router>
         <Routes>
           <Route path="/" element={<Index />} />

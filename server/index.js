@@ -25,18 +25,15 @@ app.post("/create", async (req, res) => {
 
   res.send({
     success: true,
-  })
+  });
 });
 
 app.post("/upload/image", async (req, res) => {
   const image = req.files.image;
-  const imageName = uuid.v4()+'.'+image.name.split(".").pop();
-  image.mv(
-    `${__dirname}/public/images/${imageName}`,
-    (err) => {
-      console.log(err);
-    }
-  );
+  const imageName = uuid.v4() + "." + image.name.split(".").pop();
+  image.mv(`${__dirname}/public/images/${imageName}`, (err) => {
+    console.log(err);
+  });
   res.send({
     data: `http://localhost:8787/images/${imageName}`,
   });
@@ -44,6 +41,19 @@ app.post("/upload/image", async (req, res) => {
 
 app.get("/images/:image", (req, res) => {
   res.sendFile(`${__dirname}/public/images/${req.params.image}`);
+});
+
+app.delete("/delete/:id", async (req, res) => {
+  const connection = await mongodb.MongoClient.connect(DB_ENDPOINT);
+  const db = connection.db("blog");
+  const collection = db.collection("post");
+  await collection.deleteOne({
+    _id: mongodb.ObjectId(req.params.id),
+  });
+  res.send({
+    success: true,
+  });
+  connection.close()
 });
 
 // 每当client side get这个东西，这个func就会被call
@@ -54,16 +64,18 @@ app.get("/list", async (req, res) => {
   //
   const db = connection.db("blog");
   const collection = db.collection("post");
-  const posts = await collection.find({}).toArray(); // if parameter of find is an empty object, it will return all shit
+  const posts = await collection.find({}).sort({ _id: -1 }).toArray(); // if parameter of find is an empty object, it will return all shit
   res.json(posts); //send it back to client
   connection.close();
 });
 
-app.get('/article/:id', async (req, res) => {
+app.get("/article/:id", async (req, res) => {
   const connection = await mongodb.MongoClient.connect(DB_ENDPOINT);
   const db = connection.db("blog");
   const collection = db.collection("post");
-  const post = await collection.findOne({_id: new mongodb.ObjectID(req.params.id)});
+  const post = await collection.findOne({
+    _id: new mongodb.ObjectID(req.params.id),
+  });
   res.json(post);
   connection.close();
 });

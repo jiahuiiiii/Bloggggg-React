@@ -15,14 +15,14 @@ function Article() {
   }, []);
 
   return (
-    <div className="bg-amber-300 flex-col flex w-full h-screen p-20 overflow-y-scroll relative">
+    <div className="bg-amber-300 flex-col flex w-full h-screen p-20 overflow-y-scroll overflow-x-hidden relative">
       <Link to="/" className="flex flex-row gap-3 hover:gap-5 mb-2 transition-all items-center">
         <div className="text-xl">Back to home</div>
         <Icon icon="bi:arrow-left" className="w-8 h-8" />
       </Link>
       <div>
         <div className="flex flex-row items-center gap-2">
-          <div className="text-4xl font-bold tracking-wide hover:tracking-wider transition-all">{content.name}</div>
+          <div className="text-4xl font-bold tracking-wide hover:tracking-wider transition-all mb-6">{content.name}</div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: content.content }} />
       </div>

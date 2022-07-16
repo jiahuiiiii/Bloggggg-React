@@ -144,7 +144,7 @@ function Create({ notifyFinish }) {
           type="text"
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter article titie here"
-          className="border border-neutral focus:outline-none bg-amber-100 tracking-wider w-full px-6 py-4 "
+          className="border border-neutral focus:outline-none text-2xl bg-amber-100 tracking-wider w-full px-6 py-4 "
         />
         <label className="mt-6 mb-2 block font-medium">Article content</label>
         <div className="w-full h-2/5 bg-amber-100 outline-none">
