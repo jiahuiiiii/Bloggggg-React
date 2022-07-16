@@ -3,9 +3,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
-import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
+import { AnimateSharedLayout, AnimatePresence } from 'framer-motion';
 import Logo from '../assets/blog.svg';
 import Post from './Post';
 
@@ -19,10 +18,10 @@ function Index() {
   return (
     <div className="flex-col w-full text-neutral min-h-screen bg-amber-300 flex items-center p-32 tracking-wider">
       <div className="flex flex-row w-full justify-between items-center">
-        <img alt="bruh" src={Logo} className="w-72" />
-        {/* <h1 className="text-4xl tracking-wider transition-all hover:tracking-widest">
-          BLOGGGGG
-        </h1> */}
+        <div className="flex flex-row items-end gap-5 hover:tracking-wider hover:gap-7 transition-all">
+          <div className="hover:tracking-wide transition-all text-6xl font-bold font-['Edu_NSW_ACT_Foundation'] ml-2">jiahuiiiii&apos;s bloggggg</div>
+          <div className="font-['Edu_NSW_ACT_Foundation'] transition-all">EST. 2022</div>
+        </div>
         <Link to="/create" className="flex flex-row items-center">
           <div
             to="/create"

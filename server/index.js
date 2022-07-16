@@ -53,15 +53,13 @@ app.delete("/delete/:id", async (req, res) => {
   res.send({
     success: true,
   });
-  connection.close()
+  connection.close();
 });
 
 // 每当client side get这个东西，这个func就会被call
 // req sent to server, server send the reponse back
 app.get("/list", async (req, res) => {
   const connection = await mongodb.MongoClient.connect(DB_ENDPOINT);
-  // await and async is used for api, not only because you need to wait, but also you want your client side to do other thing
-  //
   const db = connection.db("blog");
   const collection = db.collection("post");
   const posts = await collection.find({}).sort({ _id: -1 }).toArray(); // if parameter of find is an empty object, it will return all shit
@@ -77,6 +75,20 @@ app.get("/article/:id", async (req, res) => {
     _id: new mongodb.ObjectID(req.params.id),
   });
   res.json(post);
+  connection.close();
+});
+
+app.patch("/article/:id", async (req, res) => {
+  const connection = await mongodb.MongoClient.connect(DB_ENDPOINT);
+  const db = connection.db("blog");
+  const collection = db.collection("post");
+  await collection.updateOne(
+    { _id: new mongodb.ObjectID(req.params.id) },
+    { $set: req.body }
+  );
+  res.send({
+    success: true,
+  });
   connection.close();
 });
 

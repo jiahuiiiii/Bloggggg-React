@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -5,13 +6,14 @@
 import React, { useState, useEffect } from 'react';
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-function Create({ notifyFinish }) {
+function Edit({ notifyFinish }) {
   const { quill, quillRef } = useQuill();
   const [title, setTitle] = useState('');
   const navigate = useNavigate();
   const [confirmLeave, setConfirmLeave] = useState(true);
+  const { id } = useParams();
 
   function insertToEditor(url) {
     const range = quill.getSelection();
@@ -46,47 +48,42 @@ function Create({ notifyFinish }) {
       }
     };
   }
-  function publish() {
+  function update() {
     const data = {
       name: title,
       content: quill.root.innerHTML,
       date: new Date(),
     };
-    fetch('http://localhost:8787/create', {
-      method: 'POST',
+    fetch(`http://localhost:8787/article/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
 
       body: JSON.stringify(data),
-    }).then((res) => res.json()).then((d) => {
-      if (d.success) {
-        localStorage.clear();
-        notifyFinish();
-        navigate('/');
-      }
-    });
+    })
+      .then((res) => res.json())
+      .then((d) => {
+        if (d.success) {
+          localStorage.clear();
+          notifyFinish('Post updated successfully');
+          navigate('/');
+        }
+      });
   }
   useEffect(() => {
     if (quill) {
-      quill.clipboard.dangerouslyPasteHTML(
-        localStorage.getItem('autosave__content') || '',
-      );
-      quill.on('text-change', () => {
-        localStorage.setItem('autosave__content', quill.root.innerHTML);
-      });
-      setTitle(localStorage.getItem('autosave__title') || '');
       quill.getModule('toolbar').addHandler('image', () => {
         selectLocalImage();
       });
+      fetch(`http://localhost:8787/article/${id}`)
+        .then((res) => res.json())
+        .then((d) => {
+          setTitle(d.name);
+          quill.root.innerHTML = d.content;
+        });
     }
   }, [quill]);
-  useEffect(() => {
-    if (quill) {
-      localStorage.setItem('autosave__title', title);
-      localStorage.setItem('autosave__content', quill.root.innerHTML);
-    }
-  }, [quill, title]);
 
   return (
     <div className="w-full h-screen p-32 bg-amber-300">
@@ -120,7 +117,7 @@ function Create({ notifyFinish }) {
         </div>
       ) : null}
       <div className="flex w-full justify-between flex-row items-center">
-        <div className="text-4xl">Create a Post</div>
+        <div className="text-4xl">Edit a Post</div>
         <div className="flex flex-row gap-2">
           <button
             onClick={() => setConfirmLeave(false)}
@@ -130,12 +127,12 @@ function Create({ notifyFinish }) {
             Cancel
           </button>
           <Link
-            onClick={publish}
+            onClick={update}
             to="/"
             type="button"
             className="flex bg-neutral text-white px-6 py-4"
           >
-            Publish
+            Update
           </Link>
         </div>
       </div>
@@ -157,4 +154,4 @@ function Create({ notifyFinish }) {
   );
 }
 
-export default Create;
+export default Edit;
