@@ -5,7 +5,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimateSharedLayout, AnimatePresence } from 'framer-motion';
-import Logo from '../assets/blog.svg';
 import Post from './Post';
 
 function Index() {
