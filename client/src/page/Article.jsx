@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import moment from 'moment';
 import 'animate.css';
@@ -9,6 +9,7 @@ import loading from '../assets/loading.json';
 
 function Article() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [content, setContent] = useState('');
   useEffect(() => {
     fetch(`http://localhost:8787/article/${id}`)
@@ -20,8 +21,8 @@ function Article() {
 
   return (
     <div className="bg-amber-300 flex-col flex w-full h-screen p-20 overflow-y-scroll overflow-x-hidden relative">
-      <Link to="/" className="flex flex-row gap-3 hover:gap-5 mb-2 transition-all items-center">
-        <div className="text-xl">Back to home</div>
+      <Link to="/" className="flex z-[9999] flex-row gap-3 hover:gap-5 mb-2 transition-all items-center">
+        <div to="/" className="text-xl">Back to home</div>
         <Icon icon="bi:arrow-left" className="w-8 h-8" />
       </Link>
       {

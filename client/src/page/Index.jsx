@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AnimateSharedLayout, AnimatePresence } from 'framer-motion';
 import Post from './Post';
 
-function Index() {
+function Index({ isAuth, signUserOut }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch('http://localhost:8787/list')
@@ -21,14 +21,37 @@ function Index() {
           <div className="hover:tracking-wide transition-all text-6xl font-bold font-['Edu_NSW_ACT_Foundation'] ml-2">jiahuiiiii&apos;s bloggggg</div>
           <div className="font-['Edu_NSW_ACT_Foundation'] transition-all">EST. 2022</div>
         </div>
-        <Link to="/create" className="flex flex-row items-center">
-          <div
-            to="/create"
-            className="hover:shadow-2xl transition-all shadow-md bg-neutral px-8 py-6 text-white text-xl h-min"
-          >
-            Create post
-          </div>
-        </Link>
+        <div className="flex items-center gap-4">
+          {!isAuth ? (
+            <Link to="/login" className="flex flex-row items-center">
+              <div
+                to="/login"
+                className="hover:shadow-2xl transition-all shadow-md bg-neutral px-8 py-6 text-white text-xl h-min"
+              >
+                Login
+              </div>
+            </Link>
+          ) : (
+            <div className="flex flex-row items-center">
+              <div
+                onClick={signUserOut}
+                className="hover:shadow-2xl transition-all shadow-md bg-neutral px-8 py-6 text-white text-xl h-min"
+              >
+                Log out
+              </div>
+            </div>
+          ) }
+          {isAuth && (
+          <Link to="/create" className="flex flex-row items-center">
+            <div
+              to="/create"
+              className="hover:shadow-2xl transition-all shadow-md bg-neutral px-8 py-6 text-white text-xl h-min"
+            >
+              Create post
+            </div>
+          </Link>
+          )}
+        </div>
       </div>
       {data ? (
         <AnimateSharedLayout>
