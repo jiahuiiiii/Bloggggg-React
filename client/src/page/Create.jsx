@@ -6,8 +6,9 @@ import React, { useState, useEffect } from 'react';
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 
-function Create({ notifyFinish }) {
+function Create({ notifyFinish, isAuth }) {
   const { quill, quillRef } = useQuill();
   const [title, setTitle] = useState('');
   const navigate = useNavigate();
@@ -89,71 +90,90 @@ function Create({ notifyFinish }) {
   }, [quill, title]);
 
   return (
-    <div className="w-full h-screen p-32 bg-amber-300">
-      {!confirmLeave ? (
-        <div className="fixed overscroll-contain w-full h-screen top-0 left-0 bg-slate-600 bg-opacity-40 z-[9999]">
-          <div className=" border border-neutral bg-amber-200 alert rounded-none flex-col items-start shadow-lg z-9999 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 z-[9999]">
-            <div className="items-start flex flex-col">
-              <h2 className="text-xl font-medium">
-                Are you sure you want to leave?
-              </h2>
-              <p>You&apos;ll lose all the stuff you&apos;ve wirtten</p>
+    isAuth ? (
+      <div className="w-full h-screen p-32 bg-amber-300">
+        {!confirmLeave ? (
+          <div className="fixed overscroll-contain w-full h-screen top-0 left-0 bg-slate-600 bg-opacity-40 z-[9999]">
+            <div className=" border border-neutral bg-amber-200 alert rounded-none flex-col items-start shadow-lg z-9999 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 z-[9999]">
+              <div className="items-start flex flex-col">
+                <h2 className="text-xl font-medium">
+                  Are you sure you want to leave?
+                </h2>
+                <p>You&apos;ll lose all the stuff you&apos;ve wirtten</p>
+              </div>
+              <div className="flex-none w-full flex justify-end">
+                <button
+                  onClick={() => setConfirmLeave(true)}
+                  type="button"
+                  className="btn btn-sm btn-ghost rounded-none"
+                >
+                  No
+                </button>
+                <Link
+                  to="/"
+                  onClick={() => setConfirmLeave(true)}
+                  type="button"
+                  className="btn btn-sm rounded-none "
+                >
+                  Yes
+                </Link>
+              </div>
             </div>
-            <div className="flex-none w-full flex justify-end">
-              <button
-                onClick={() => setConfirmLeave(true)}
-                type="button"
-                className="btn btn-sm btn-ghost rounded-none"
-              >
-                No
-              </button>
-              <Link
-                to="/"
-                onClick={() => setConfirmLeave(true)}
-                type="button"
-                className="btn btn-sm rounded-none "
-              >
-                Yes
+          </div>
+        ) : null}
+        <div className="flex w-full justify-between flex-row items-center">
+          <div className="text-4xl">Create a Post</div>
+          <div className="flex flex-row gap-2">
+            <button
+              onClick={() => setConfirmLeave(false)}
+              type="button"
+              className="flex underline px-6 py-4"
+            >
+              Cancel
+            </button>
+            <Link
+              onClick={publish}
+              to="/"
+              type="button"
+              className="flex bg-neutral text-white px-6 py-4"
+            >
+              Publish
+            </Link>
+          </div>
+        </div>
+        <div className="w-full h-full flex items-start flex-col">
+          <label className="mt-8 mb-2 block font-medium">Article title</label>
+          <input
+            value={title}
+            type="text"
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter article titie here"
+            className="border border-neutral focus:outline-none text-2xl bg-amber-100 tracking-wider w-full px-6 py-4 "
+          />
+          <label className="mt-6 mb-2 block font-medium">Article content</label>
+          <div className="w-full h-2/5 bg-amber-100 outline-none">
+            <div ref={quillRef} />
+          </div>
+        </div>
+      </div>
+    )
+      : (
+        <div className="w-full h-screen p-32 bg-amber-300">
+          <Link to="/" className="flex z-[9999] flex-row gap-3 hover:gap-5 mb-2 transition-all items-center">
+            <div to="/" className="text-xl">Back to home</div>
+            <Icon icon="bi:arrow-left" className="w-8 h-8" />
+          </Link>
+          <div className="flex w-full justify-center h-full flex-row items-center">
+            <div className="text-4xl">
+              <Link to="/login">
+                <span className="underline">Sign in </span>
               </Link>
+              to continue
             </div>
           </div>
         </div>
-      ) : null}
-      <div className="flex w-full justify-between flex-row items-center">
-        <div className="text-4xl">Create a Post</div>
-        <div className="flex flex-row gap-2">
-          <button
-            onClick={() => setConfirmLeave(false)}
-            type="button"
-            className="flex underline px-6 py-4"
-          >
-            Cancel
-          </button>
-          <Link
-            onClick={publish}
-            to="/"
-            type="button"
-            className="flex bg-neutral text-white px-6 py-4"
-          >
-            Publish
-          </Link>
-        </div>
-      </div>
-      <div className="w-full h-full flex items-start flex-col">
-        <label className="mt-8 mb-2 block font-medium">Article title</label>
-        <input
-          value={title}
-          type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter article titie here"
-          className="border border-neutral focus:outline-none text-2xl bg-amber-100 tracking-wider w-full px-6 py-4 "
-        />
-        <label className="mt-6 mb-2 block font-medium">Article content</label>
-        <div className="w-full h-2/5 bg-amber-100 outline-none">
-          <div ref={quillRef} />
-        </div>
-      </div>
-    </div>
+      )
+
   );
 }
 

@@ -18,8 +18,12 @@ function Index({ isAuth, signUserOut }) {
     <div className="flex-col w-full text-neutral min-h-screen bg-amber-300 flex items-center p-32 tracking-wider">
       <div className="flex flex-row w-full justify-between items-center">
         <div className="flex flex-row items-end gap-5 hover:tracking-wider hover:gap-7 transition-all">
-          <div className="hover:tracking-wide transition-all text-6xl font-bold font-['Edu_NSW_ACT_Foundation'] ml-2">jiahuiiiii&apos;s bloggggg</div>
-          <div className="font-['Edu_NSW_ACT_Foundation'] transition-all">EST. 2022</div>
+          <div className="hover:tracking-wide transition-all text-6xl font-bold font-['Edu_NSW_ACT_Foundation'] ml-2">
+            jiahuiiiii&apos;s bloggggg
+          </div>
+          <div className="font-['Edu_NSW_ACT_Foundation'] transition-all">
+            EST. 2022
+          </div>
         </div>
         <div className="flex items-center gap-4">
           {!isAuth ? (
@@ -40,16 +44,16 @@ function Index({ isAuth, signUserOut }) {
                 Log out
               </div>
             </div>
-          ) }
+          )}
           {isAuth && (
-          <Link to="/create" className="flex flex-row items-center">
-            <div
-              to="/create"
-              className="hover:shadow-2xl transition-all shadow-md bg-neutral px-8 py-6 text-white text-xl h-min"
-            >
-              Create post
-            </div>
-          </Link>
+            <Link to="/create" className="flex flex-row items-center">
+              <div
+                to="/create"
+                className="hover:shadow-2xl transition-all shadow-md bg-neutral px-8 py-6 text-white text-xl h-min"
+              >
+                Create post
+              </div>
+            </Link>
           )}
         </div>
       </div>
@@ -58,7 +62,14 @@ function Index({ isAuth, signUserOut }) {
           <div className="w-full space-y-10 mt-16 " layout>
             <AnimatePresence>
               {data.map((item, index) => (
-                <Post key={item._id} item={item} index={index} setData={setData} postList={data} />
+                <Post
+                  key={item._id}
+                  item={item}
+                  index={index}
+                  setData={setData}
+                  postList={data}
+                  isAuth={isAuth}
+                />
               ))}
             </AnimatePresence>
           </div>

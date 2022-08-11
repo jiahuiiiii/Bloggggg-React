@@ -1,16 +1,28 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, getAuth } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { auth, provider } from '../firebase-config';
+import { toast } from 'react-toastify';
 
 function Login({ setIsAuth }) {
   const navigate = useNavigate();
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
-      localStorage.setItem('isAuth', true);
-      setIsAuth(true);
-      navigate('/');
+      const auth_ = getAuth();
+      const user = auth_.currentUser;
+      const { uid } = user;
+      if (uid === 'ZpPDuoTyNBOUKP4RgL3lh1oOzDr2') {
+        localStorage.setItem('isAuth', true);
+        setIsAuth(true);
+        navigate('/');
+      } else {
+        localStorage.setItem('isAuth', false);
+        setIsAuth(false);
+        toast.error('You don\'t have admin access');
+        navigate('/');
+      }
     });
   };
   return (

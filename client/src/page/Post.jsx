@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import moment from 'moment';
 
 function Post({
-  item, postList, setData, index,
+  item, postList, setData, index, isAuth,
 }) {
   const deletePost = (id) => {
     fetch(`http://localhost:8787/delete/${id}`, {
@@ -77,44 +77,46 @@ function Post({
           <div className="underline">Read Aricle</div>
         </Link>
       </div>
-      <div className="dropdown dropdown-end">
-        <label
-          tabIndex="0"
-          className="btn bg-transparent border-none hover:bg-amber-50 transition-all m-1"
-        >
-          <Icon
-            icon="bx:dots-vertical-rounded"
-            className="h-8 w-8 text-neutral"
-          />
-        </label>
-        <ul
-          tabIndex="0"
-          className="dropdown-content menu p-2 shadow bg-amber-50 rounded-box w-52"
-        >
-          <li className="flex flex-row items-center ">
-            <Link to={`/edit/${item._id}`} className="w-full justify-start btn bg-transparent border-none hover:bg-teal-500">
-              <Icon
-                icon="ant-design:edit-outlined"
-                className="text-neutral w-7 h-7 -mt-[2px]"
-              />
-              <a>Edit</a>
-            </Link>
-          </li>
-          <li className="flex flex-row items-center">
-            <button
-              type="button"
-              onClick={() => deletePost(item._id)}
-              className="w-full justify-start btn bg-transparent border-none hover:bg-rose-500"
-            >
-              <Icon
-                icon="ant-design:delete-outlined"
-                className="text-neutral w-7 h-7 -mt-[2px]"
-              />
-              Delete
-            </button>
-          </li>
-        </ul>
-      </div>
+      {isAuth && (
+        <div className="dropdown dropdown-end">
+          <label
+            tabIndex="0"
+            className="btn bg-transparent border-none hover:bg-amber-50 transition-all m-1"
+          >
+            <Icon
+              icon="bx:dots-vertical-rounded"
+              className="h-8 w-8 text-neutral"
+            />
+          </label>
+          <ul
+            tabIndex="0"
+            className="dropdown-content menu p-2 shadow bg-amber-50 rounded-box w-52"
+          >
+            <li className="flex flex-row items-center ">
+              <Link to={`/edit/${item._id}`} className="w-full justify-start btn bg-transparent border-none hover:bg-teal-500">
+                <Icon
+                  icon="ant-design:edit-outlined"
+                  className="text-neutral w-7 h-7 -mt-[2px]"
+                />
+                <a>Edit</a>
+              </Link>
+            </li>
+            <li className="flex flex-row items-center">
+              <button
+                type="button"
+                onClick={() => deletePost(item._id)}
+                className="w-full justify-start btn bg-transparent border-none hover:bg-rose-500"
+              >
+                <Icon
+                  icon="ant-design:delete-outlined"
+                  className="text-neutral w-7 h-7 -mt-[2px]"
+                />
+                Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
     </motion.div>
   );
 }
