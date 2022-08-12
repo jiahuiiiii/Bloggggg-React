@@ -16,6 +16,7 @@ function Login({ setIsAuth }) {
       if (uid === 'ZpPDuoTyNBOUKP4RgL3lh1oOzDr2') {
         localStorage.setItem('isAuth', true);
         setIsAuth(true);
+        toast.success('Log in succeeded!');
         navigate('/');
       } else {
         localStorage.setItem('isAuth', false);
