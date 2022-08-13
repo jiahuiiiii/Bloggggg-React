@@ -23,7 +23,7 @@ function Create({ notifyFinish, isAuth }) {
     fd.append('image', file);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8787/upload/image', true);
+    xhr.open('POST', 'https://api.blog.jiahuiiiii.mrga.thecodeblog.net/upload/image', true);
     xhr.onload = () => {
       if (xhr.status === 200) {
         const url = JSON.parse(xhr.responseText).data;
@@ -53,7 +53,7 @@ function Create({ notifyFinish, isAuth }) {
       content: quill.root.innerHTML,
       date: new Date(),
     };
-    fetch('http://localhost:8787/create', {
+    fetch('https://api.blog.jiahuiiiii.mrga.thecodeblog.net/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

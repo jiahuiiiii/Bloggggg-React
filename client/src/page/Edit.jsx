@@ -24,7 +24,7 @@ function Edit({ notifyFinish }) {
     fd.append('image', file);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8787/upload/image', true);
+    xhr.open('POST', 'https://api.blog.jiahuiiiii.mrga.thecodeblog.net/upload/image', true);
     xhr.onload = () => {
       if (xhr.status === 200) {
         const url = JSON.parse(xhr.responseText).data;
@@ -54,7 +54,7 @@ function Edit({ notifyFinish }) {
       content: quill.root.innerHTML,
       date: new Date(),
     };
-    fetch(`http://localhost:8787/article/${id}`, {
+    fetch(`https://api.blog.jiahuiiiii.mrga.thecodeblog.net/article/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function Edit({ notifyFinish }) {
       quill.getModule('toolbar').addHandler('image', () => {
         selectLocalImage();
       });
-      fetch(`http://localhost:8787/article/${id}`)
+      fetch(`https://api.blog.jiahuiiiii.mrga.thecodeblog.net/article/${id}`)
         .then((res) => res.json())
         .then((d) => {
           setTitle(d.name);

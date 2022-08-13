@@ -10,7 +10,7 @@ import Post from './Post';
 function Index({ isAuth, signUserOut }) {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8787/list')
+    fetch('https://api.blog.jiahuiiiii.mrga.thecodeblog.net/list')
       .then((res) => res.json())
       .then((d) => setData(d));
   }, []);

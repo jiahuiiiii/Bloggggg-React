@@ -12,7 +12,7 @@ function Article() {
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   useEffect(() => {
-    fetch(`http://localhost:8787/article/${id}`)
+    fetch(`https://api.blog.jiahuiiiii.mrga.thecodeblog.net/article/${id}`)
       .then((res) => res.json())
       .then((json) => {
         setContent(json);

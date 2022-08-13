@@ -16,7 +16,7 @@ function Post({
   item, postList, setData, index, isAuth,
 }) {
   const deletePost = (id) => {
-    fetch(`http://localhost:8787/delete/${id}`, {
+    fetch(`https://api.blog.jiahuiiiii.mrga.thecodeblog.net/delete/${id}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())

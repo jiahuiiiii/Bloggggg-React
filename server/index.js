@@ -35,7 +35,7 @@ app.post("/upload/image", async (req, res) => {
     console.log(err);
   });
   res.send({
-    data: `http://localhost:8787/images/${imageName}`,
+    data: `https://api.blog.jiahuiiiii.mrga.thecodeblog.net/images/${imageName}`,
   });
 });
 
