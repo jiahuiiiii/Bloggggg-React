@@ -57,7 +57,16 @@ function Index({ isAuth, signUserOut }) {
           )}
         </div>
       </div>
-      {data ? (
+      {data == [] ? (
+        <div className="flex flex-col relative z-[9997] h-full w-full items-center justify-center">
+          <div>wait...</div>
+          <div className="lds-facebook">
+            <div />
+            <div />
+            <div />
+          </div>
+        </div>
+      ) : (
         <AnimateSharedLayout>
           <div className="w-full space-y-10 mt-16 " layout>
             <AnimatePresence>
@@ -74,8 +83,6 @@ function Index({ isAuth, signUserOut }) {
             </AnimatePresence>
           </div>
         </AnimateSharedLayout>
-      ) : (
-        <div>Loading...</div>
       )}
     </div>
   );
